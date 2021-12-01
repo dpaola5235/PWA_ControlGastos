@@ -1,4 +1,4 @@
-/*let pathSw = '/20213-PWA-EF/sw.js';
+let pathSw = '/20213-PWA-EF/sw.js';
 let url = window.location.href;
 
 if (navigator.serviceWorker) {
@@ -6,7 +6,7 @@ if (navigator.serviceWorker) {
         pathSw = '/sw.js';
     }
     navigator.serviceWorker.register(pathSw);
-}*/
+}
 
 // botones
 let principal = $('#principal-monederos');
@@ -55,3 +55,4 @@ $('.btn-categoria').on('click', function () {
         categoria.fadeIn(1000);
     });
 });
+

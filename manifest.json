@@ -1,0 +1,16 @@
+{
+    "short_name": "TimeUTEZ",
+    "name": "The times UTEZ",
+    "start_url": "index.html",
+    "background_color": "#80cbc4",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#80cbc4",
+    "icons": [
+        {
+            "src": "img/budget.png",
+            "type": "image/png",
+            "sizes": "72x72"
+        }
+    ]
+}
