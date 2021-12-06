@@ -1,3 +1,4 @@
+importScripts('https://cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js');
 let path = '/20213-PWA-EF/';
 
 const CACHE_STATIC_NAME = 'static-v1';
@@ -35,6 +36,7 @@ self.addEventListener('install', (event) => {
                 path + 'js/app.js',
                 path + 'css/styles.css',
                 path + 'img/budget.png',
+                path + 'js/camera.js',
                 
             ]);
         });
@@ -44,7 +46,8 @@ self.addEventListener('install', (event) => {
                 'https://code.jquery.com/jquery-3.5.1.min.js',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
-                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css'
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css',
+                'https://cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js'
             ]);
     });
 
@@ -81,6 +84,7 @@ self.addEventListener('fetch', (event) => {
                         return respNet.clone();
                     }).catch(() => {
                         console.log('Error al solicitar el recurso');
+                        
                     });
             });
     //}
