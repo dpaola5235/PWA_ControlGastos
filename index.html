@@ -20,7 +20,6 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="monederos.html"><i class="fas fa-wallet"> Monederos</i></a></li>
         <li class="nav-item"><a class="nav-link" href="categorias.html"><i class="fas fa-list"> Categorias</i></a></li>
-        <li class="nav-item"><a class="nav-link" href="perfil.html"><i class="far fa-user"> Cuenta</i></a></li>
       </ul>
     </div>
   </div>
@@ -44,21 +43,27 @@
             <input type="hidden" id="idMonedero">
             <div class="row">
               <div class="col-5">              
-                <h2 id="nombreMonedero">Monedero1</h2>
+                <h2 id="nombreMonedero"></h2>
               </div>
               <div class="col-7">
-                <h5 id="totalMonedero">$1,350</h5>
+                <h5 id="totalMonedero">$</h5>
               </div>
               <div class="col-6">
-                <p>Entradas</p>
-                <p>Salidas</p>
+                <p>Ingresos</p>
+                <ul class="list-group list-group-flush" id="ingresos-nombre"></ul>
+                <hr>
+                <p>Gastos</p>
+                <ul class="list-group list-group-flush" id="gastos-nombre"></ul>
               </div>
               <div class="col-6" style="text-align: right;">
-                <p>1350</p>
-                <p>0</p>
+                <p>Monto</p>
+                <ul class="list-group list-group-flush" id="entradas-index"></ul>
+                <hr>
+                <p>Monto</p>
+                <ul class="list-group list-group-flush" id="salidas-index"></ul>
                 <hr>
                 <!-- cambiar el id dependiendo del monedero -->
-                <p id="total">1350</p>
+                <p id="total"></p>
               </div>
             </div>
             <div class="row">
@@ -79,11 +84,11 @@
                 </div>
                 <div class="form-group">
                   <label>Cantidad: </label>
-                  <input type="text" class="form-control" id="cantidad">
+                  <input type="text" class="form-control" id="cantidad-index">
                 </div>
                 <div class="form-group">
                   <label>Categoria: </label>
-                  <select class="form-select" aria-label="Default select example" id="categoriaSelect">
+                  <select class="form-select" aria-label="Default select example" id="categoriaSelect-index">
                     <option selected>Seleccione una opción</option>                    
                   </select>
                 </div>
@@ -91,21 +96,22 @@
                 <div class="form-group">
                   <!-- Mostrar el monedero en el que se encuentra -->
                   <label>Monedero: </label>
-                  <input type="text" class="form-control" id="monederoInput">
+                  <input type="hidden" id="idMonedero-index">
+                  <input type="text" class="form-control" id="monederoInput-index" disabled>
                 </div>
                 <br>
                 <div class="form-group">
                   <label>Agregar Recibo: </label>
-                  <button type="button" id="btnCamera" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
-                  <button id="btnTakePhoto" class="btn btn-primary btn-block">Tomar Foto</button>
+                  <button type="button" id="btnCamera-index" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
+                  <button id="btnTakePhoto-index" class="btn btn-primary btn-block">Tomar Foto</button>
                   <div id="div-player" style="height: 300px;">
-                    <video id="player" class="object-fill" autoplay></video>
+                    <video id="player-index" class="object-fill" autoplay></video>
                   </div>
-                  <div id="cardPhoto"></div>
+                  <div id="cardPhoto-index"></div>
                 </div>
                 <br>
                 <div class="col-auto">
-                  <button id="btnGuardar-Tran" class="btn mb-3 btn-info">Guardar</button>
+                  <button id="btnGuardar-index" class="btn mb-3 btn-info">Guardar</button>
                 </div>
               </div>
             </div>            

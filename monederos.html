@@ -39,6 +39,12 @@
                     <ul class="list-group list-group-flush" id="monederos-list">
                     </ul>
                 </div>
+                <div class="row">
+                    <div class="col align-self-end">
+                      <button type="button" class="btn btn-primary btn-transaccionMonederos" data-toggle="tooltip" data-placement="top"
+                        title="Agregar una nueva transaccion"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="monedero" style="display: none;">
@@ -54,12 +60,18 @@
                     <p id="totalMonedero-monedero">$</p>
                 </div>
                 <div class="col-6">
-                    <p>Entradas</p>
-                    <p>Salidas</p>
+                    <p>Ingresos</p>
+                    <ul class="list-group list-group-flush" id="ingresos-nombre"></ul>
+                    <hr>
+                    <p>Gastos</p>
+                    <ul class="list-group list-group-flush" id="gastos-nombre"></ul>
                 </div>
                 <div class="col-6" style="text-align: right;">
-                    <p id="entradas"></p>
-                    <p id="salidas">0</p>
+                    <p >Monto</p>
+                    <ul class="list-group list-group-flush" id="entradas-index"></ul>
+                    <hr>
+                    <p >Monto</p>
+                    <ul class="list-group list-group-flush" id="salidas-index"></ul>
                     <hr>
                     <p id="total-monedero"></p>
                 </div>
@@ -80,34 +92,56 @@
                     </div>
                     <div class="form-group">
                         <label>Cantidad: </label>
-                        <input type="text" class="form-control" id="cantidad">
+                        <input type="text" class="form-control" id="cantidad-monederos">
                     </div>
                     <div class="form-group">
                         <label>Categoria: </label>
-                        <select class="form-select" aria-label="Default select example" id="categoriaSelect">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" id="categoriaSelect-index">
+                            <option selected>Seleciona una opcion</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Monedero: </label>
-                        <input type="text" class="form-control"  id="monederoInput">
+                        <!-- <input type="text" id="idMonedero-monedero"> -->
+                        <input type="text" class="form-control"  id="monederoInput-monederos" disabled>
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Agregar Recibo: </label>
-                        <button type="button" id="btnCameraMonederos" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
-                        <button id="btnTakePhoto" class="btn btn-primary btn-block">Tomar Foto</button>
+                        <button type="button" id="btnCamera-index" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
+                        <button id="btnTakePhoto-index" class="btn btn-primary btn-block">Tomar Foto</button>
                         <div id="div-player" style="height: 300px;">
-                          <video id="player" class="object-fill" autoplay></video>
+                            <video id="player-index" class="object-fill" autoplay></video>
                         </div>
-                        <div id="cardPhoto"></div>
+                        <div id="cardPhoto-index"></div>
                     </div>
                     <br>
                     <div class="form-group">
-                        <button id="btnGuardar" class="btn btn-sm btn-info float-right">Guardar</button>
+                        <button id="btnGuardarTran-monedero" class="btn btn-sm btn-info float-right">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="newMonedero" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <button  type="button" class="btn btn-outline-primary btn-regresarMonedero" style="margin: 5px; float: right;" ><i class="fas fa-arrow-circle-left"></i></button>
+                        </div>                        
+                    </div>
+                    <h1>Nuevo Monedero</h1>
+                    <div class="form-group">
+                        <label>Nombre : </label>
+                        <input type="text" class="form-control" id="monederoNombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Monto Inicial : </label>
+                        <input type="text" class="form-control" id="montoInicial">
+                    </div>
+                    <br>
+                    <div class="col-auto">
+                        <button id="btnGuardar-monedero" class="btn mb-3 btn-info">Guardar</button>
                     </div>
                 </div>
             </div>

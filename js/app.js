@@ -15,23 +15,27 @@ let transaccion = $('#transaccion');
 let categorias = $('#categorias');
 let categoria = $('#categoria');
 let btnGuardar = $('#btnGuardar');
+let btnGuardarIndex = $('#btnGuardar-index')
+
+let newMonedero = $('#newMonedero');
 
 let monederoNuevo = $('#monedero-nuevo')
 
 //botones camara
-let player = $('#player');
-let btnCameraBack = $('#btnCamera');
-let btnTakePhoto = $('#btnTakePhoto');
+let player = $('#player-index');
+let btnCameraBack = $('#btnCamera-index');
+let btnTakePhoto = $('#btnTakePhoto-index');
 let photo = $('#photo');
 
 let btnCameraMonederos = $('#btnCameraMonederos');
 let btnGuardarCategorias = $('#btnGuardar-Categorias');
 
 // inputs
-let cantidad = $('#cantidad');
-let monederoInput = $('#monederoInput');
-let categoriaSelect = $('#categoriaSelect');
+let cantidad = $('#cantidad-index');
+let monederoInput = $('#monederoInput-index');
+let categoriaSelect = $('#categoriaSelect-index');
 let recibo = $('#fotoRecibo');
+let idMonederoIndex = $('#idMonedero-index')
 
 let nombreCat = $('#nombreCategoria')
 let tipo = ''
@@ -45,13 +49,18 @@ let monederoNombre = $('#monederoNombre');
 let nombreMonedero = $('#nombreMonedero');
 let totalMonedero = $('#totalMonedero');
 let total = $('#total');
+//let entradasIndex = $('#entradas-index');
+//let salidasIndex = $('#salidas-index')
 
 // Mondero Page
 let nombremone = $('#nombreMonedero-monedero');
 let totalMoneP = $('#totalMonedero-monedero');
 let totalMone = $('#total-monedero');
 let idMonedero = $('#idMonedero');
-let entradas = $('#entradas')
+let entradas = $('#entradas');
+
+let monederoInputMonederos = $('#monederoInput-monederos');
+let cantidadMonederos = $('#cantidad-monederos')
 
 
 const camera = new Camera(player[0]);
@@ -68,13 +77,17 @@ const camera = new Camera(player[0]);
 $('.btn-regresar').on('click', function () {
     console.log('Regresar');
     monedero.fadeOut(function () {
-        principal.fadeIn(1000);
+        principal.fadeIn(1000);        
     });
-    nombremone.val('');
-    totalMoneP.val('');
-    totalMone.val('');
-    idMonedero= '';
-    entradas.val('')
+    nombremone.empty()
+    totalMoneP.empty();
+    totalMone.empty();
+    idMonedero.empty()
+    entradas.empty();
+    $('#salidas-index').empty()
+    $('#entradas-index').empty()
+    $('#gastos-nombre').empty()
+    $('#ingresos-nombre').empty()
 });
 
 $('.btn-regresarTran').on('click', function () {
@@ -93,11 +106,12 @@ $('.btn-regresarCat').on('click', function () {
     });
 });
 
+// index agregar una nueva transaccion
 $('.btn-transaccion').on('click', function () {
-    console.log('Transaccion');
     monedero.fadeOut(function () {
         transaccion.fadeIn(1000);
     });
+    consultaCategorias();
 });
 
 $('.btn-categoria').on('click', function () {
@@ -105,6 +119,18 @@ $('.btn-categoria').on('click', function () {
         categoria.fadeIn(1000);
     });
 });
+
+$('.btn-transaccionMonederos').on('click',function(){
+    principal.fadeOut(function(){
+        newMonedero.fadeIn(1000)
+    })
+});
+
+$('.btn-regresarMonedero').on('click',function(){
+    newMonedero.fadeOut(function(){
+        principal.fadeIn(1000)
+    });
+})
 
 btnCameraBack.on('click',()=>{
     //photoText = "Camara Trasera"
@@ -129,8 +155,9 @@ btnTakePhoto.on('click',()=>{
     //photoUser.attr('src',);
     let photo = camera.takePhoto();
     let image = createImage(photo);
-    $('#cardPhoto').append(image);
-    $('#div-player').attr('style','display:none')
+    $('#cardPhoto-index').append(image);
+    $('#div-player').attr('style','display:none');
+    recibo.attr('src','')
 });
 
 btnGuardar.on('click',()=>{
@@ -139,6 +166,13 @@ btnGuardar.on('click',()=>{
         monedero.fadeIn(1000);
     });
 });
+
+$('#btnGuardar-monedero').on('click',()=>{
+    registrarMonedero()
+    newMonedero.fadeOut(function(){
+        principal.fadeIn(1000)
+    })
+})
 
 btnGuardarCategorias.on('click',()=>{
     registrarCategoria();
@@ -149,33 +183,117 @@ btnGuardarCategorias.on('click',()=>{
 
 });
 
+btnGuardarIndex.on('click',()=>{
+    guardarGatos()
+    transaccion.fadeOut(function () {
+        monedero.fadeIn(1000);
+    });
+});
 
+$('#btnGuardarTran-monedero').on('click',()=>{
+    guardarNuevaTransaccion();
+    transaccion.fadeOut(function () {
+        monedero.fadeIn(1000);
+    });
+});
 
 
 /*************************** Funciones ***************************/
 
 $(document).ready(function(){
     console.log('funciona')
-    consultaCategorias();
+    
     fetch('http://localhost:8090/control-gastos/monedero').
     then(res => res.json())
     .then((resJson) => {     
-        if(resJson.length > 0){
+        if(resJson.length > 0){            
             console.log('Hay monederos');
+            consultaUltimoMonedero()            
+            categoriasLista.forEach(cat => {
+                let catOption = cargarSelectCategorias(cat)
+                $('#categoriaSelect-index').append(catOption);
+            });
+            consultaCategorias()
+            consultarMonederos()
         }else{
             console.log("No hay nada registrado");
             monedero.fadeOut(function () {
                 monederoNuevo.fadeIn(1000);
-            });
-            /*categoriasLista.forEach(cat => {
-                let catOption = cargarSelectCategorias(cat)
-                $('#categoriaSelect').append(catOption);
-            });*/
+            });            
         }
     }).catch(err => console.log(err));
+    consultaCategorias()
     consultarMonederos()
     
 });
+
+function consultaUltimoMonedero(){
+    fetch('http://localhost:8090/control-gastos/monedero/ultimoMonedero').
+    then(res => res.json())
+    .then((resp) => {
+        nombreMonedero.append(resp.nombre);
+        monederoInput.val(resp.nombre);
+        idMonederoIndex.val(resp.idMonedero)
+        totalMonedero.append(resp.montoTotal)
+        total.append(resp.montoTotal)
+        //entradasIndex.append(resp.montoTotal)
+        consultaGastos(resp.idMonedero)
+        consultaIngresos(resp.idMonedero)
+    }).catch(err => console.log(err));
+}
+
+function consultaGastos(id){
+    fetch('http://localhost:8090/control-gastos/gasto-by-monedero/'+id).
+    then(res => res.json())
+    .then((resp) => {
+        resp.forEach(gasto => {
+            let gastoLi = cargarGastosLi(gasto)
+            $('#salidas-index').append(gastoLi);
+            let nombregasto = cargarGastoNombre(gasto);
+            $('#gastos-nombre').append(nombregasto);
+        });
+        //salidasIndex.append(resp.monto) 
+        //
+    }).catch(err => console.log(err));
+}
+
+function cargarGastosLi(gasto){
+    return $(`
+    <li class="list-group-item text-danger">- ${gasto.monto}</li>
+    `)
+}
+
+function cargarGastoNombre(gasto){
+    return $(`
+    <li class="list-group-item ">${gasto.categoria.categoria}</li>
+    `)
+}
+
+function  consultaIngresos(id){
+    fetch('http://localhost:8090/control-gastos/ingreso-by-monedero/'+id).
+    then(res => res.json())
+    .then((resp) => {
+        resp.forEach(ingreso => {
+            let ingresoLi = cargarIngresoLi(ingreso)
+            $('#entradas-index').append(ingresoLi);
+            let ingresonombre = cargaringresoNombre(ingreso);
+            $('#ingresos-nombre').append(ingresonombre);
+        });
+    }).catch(err => console.log(err));
+}
+
+function cargarIngresoLi(ingreso){
+    return $(`
+    <li class="list-group-item text-success"> +${ingreso.monto}</li>
+    `)
+}
+
+function cargaringresoNombre(ingreso){
+    return $(`
+    <li class="list-group-item"> ${ingreso.categoria.categoria}</li>
+    `)
+}
+
 
 function createImage(img) {
 
@@ -189,10 +307,10 @@ function createImage(img) {
 
 function guardarGatos(){
 
-    let cantidadinput=cantidad.val()
-    let idMonedero= monederoInput.val()
+    let cantidadinput=cantidad.val()   
     let idCategoria = categoriaSelect.val()
-    let srcRecibo = recibo.attr('src');
+    let srcRecibo = btoa(recibo.attr('src'));
+    
 
     fetch("http://localhost:8090/control-gastos/categoria/"+idCategoria)
     .then(res => res.json())
@@ -202,10 +320,12 @@ function guardarGatos(){
                 "idCategoria":idCategoria
             },
             "monedero":{
-                "idMonedero":idMonedero
+                "idMonedero":idMonederoIndex.val()
             },
-            "monto":cantidadinput
+            "monto":cantidadinput,
+            "comprobante" : srcRecibo
         }
+        console.log(cuerpoGasto);
         if(resp.tipo == 'gasto'){
             
             fetch("http://localhost:8090/control-gastos/gasto",{
@@ -243,9 +363,10 @@ function guardarGatos(){
             });
         }
 
-        cantidadinput.val('')
-        idCategoria.val('')
-        idMonedero.val('')
+        cantidad.val('')
+        categoriaSelect.val('')
+        idMonederoIndex.val('')
+        $('#cardPhoto-index').empty();
         
     });
 
@@ -303,18 +424,21 @@ function registrarCategoria(){
         alert('La categoría ha sido registrada')
         nombreCat.val(''),
         tipo = ""
+        $('#ingreso').prop('checked', false);
+        $('#gasto').prop('checked', false);
+
     }).catch (function (error) {
         console.log('No se registro la categoria', error);
         alert('Opps!! Ocurrio un erros')
     });
-    
+
 }
 
 function consultaCategorias(){
     fetch("http://localhost:8090/control-gastos/categoria")
     .then(res => res.json())
     .then((resp) =>{ 
-        categoriasLista = resp;       
+        categoriasLista = resp;            
         resp.forEach(categoria => {
             let categoriaHtml = crearCategorias(categoria)
             $('#categorias-list').append(categoriaHtml);
@@ -359,7 +483,8 @@ function crearLiMonederos(monedero){
 }
 
 function monederoPorId(id){
-    
+    idMonedero.val(id);
+
     principal.fadeOut(function () {
         monedero.fadeIn(1000);
     });
@@ -371,8 +496,87 @@ function monederoPorId(id){
         nombremone.append(resJson.nombre);
         totalMoneP.append(resJson.montoTotal);
         totalMone.append(resJson.montoTotal);
-        entradas.append(resJson.montoTotal)
+        entradas.append(resJson.montoTotal);
+        monederoInputMonederos.val(resJson.nombre)
+        consultaGastos(id)
+        consultaIngresos(resJson.idMonedero)
     }).catch(err => console.log(err));    
+}
+
+function crearMonederosLi(monedero){
+    return $(`
+    <li class="list-group-item text-success"> +${monedero.monto}</li>
+    `)
+}
+
+function guardarNuevaTransaccion(){
+    let cantidadinput=cantidadMonederos.val()   
+    let idCategoria = categoriaSelect.val()
+    let srcRecibo = recibo.attr('src');
+    if(srcRecibo != null){
+        btoa(srcRecibo);
+    }
+    
+
+    fetch("http://localhost:8090/control-gastos/categoria/"+idCategoria)
+    .then(res => res.json())
+    .then((resp) =>{ 
+        let cuerpoGasto = {
+            "categoria":{
+                "idCategoria":idCategoria
+            },
+            "monedero":{
+                "idMonedero":idMonedero.val()
+            },
+            "monto":cantidadinput,
+            "comprobante" : srcRecibo
+        }
+        console.log(cuerpoGasto);
+        if(resp.tipo == 'gasto'){
+            
+            fetch("http://localhost:8090/control-gastos/gasto",{
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(cuerpoGasto)
+            }).then(res => res.json())
+            .then((resJson) =>{
+                console.log(resJson);
+                alert('El gasto ha sido registrado')
+               
+            }).catch (function (error) {
+                console.log('No se registro el gasto', error);
+                alert('Opps!! Ocurrio un error')
+            });
+    
+        }else{
+             
+            fetch("http://localhost:8090/control-gastos/ingreso",{
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(cuerpoGasto)
+            }).then(res => res.json())
+            .then((resJson) =>{
+                console.log(resJson);
+                alert('El ingreso ha sido registrado')
+               
+            }).catch (function (error) {
+                console.log('No se registro el ingreso', error);
+                alert('Opps!! Ocurrio un error')
+            });
+        }
+
+        cantidadMonederos.val('')
+        categoriaSelect.val('')
+        idMonedero.val('')
+        recibo.attr('src','')
+        $('#cardPhoto-index').empty();
+        
+        
+    });
 }
 
 
