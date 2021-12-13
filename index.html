@@ -83,30 +83,46 @@
                 </div>
                 <div class="form-group">
                   <label>Categoria: </label>
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <select class="form-select" aria-label="Default select example" id="categoriaSelect">
+                    <option selected>Seleccione una opción</option>                    
                   </select>
                 </div>
                 
                 <div class="form-group">
                   <!-- Mostrar el monedero en el que se encuentra -->
                   <label>Monedero: </label>
-                  <input type="text" class="form-control" id="monedero">
+                  <input type="text" class="form-control" id="monederoInput">
                 </div>
                 <br>
                 <div class="form-group">
                   <label>Agregar Recibo: </label>
                   <button type="button" id="btnCamera" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
-                    <img id="fotoRecibo" class="img-fluid rounded text-center" style="width: 150px;"  src="" alt="">
+                  <button id="btnTakePhoto" class="btn btn-primary btn-block">Tomar Foto</button>
+                  <div id="div-player" style="height: 300px;">
+                    <video id="player" class="object-fill" autoplay></video>
+                  </div>
+                  <div id="cardPhoto"></div>
                 </div>
                 <br>
                 <div class="col-auto">
-                  <button id="btnGuardar" class="btn mb-3 btn-info">Guardar</button>
+                  <button id="btnGuardar-Tran" class="btn mb-3 btn-info">Guardar</button>
                 </div>
               </div>
+            </div>            
+          </div>
+          <div id="monedero-nuevo" style="display: none;">
+            <h1>Nuevo Monedero</h1>
+            <div class="form-group">
+              <label>Nombre : </label>
+              <input type="text" class="form-control" id="monederoNombre">
+            </div>
+            <div class="form-group">
+              <label>Monto Inicial : </label>
+              <input type="text" class="form-control" id="montoInicial">
+            </div>
+            <br>
+            <div class="col-auto">
+              <button id="btnGuardar" class="btn mb-3 btn-info">Guardar</button>
             </div>
           </div>
         </div>
@@ -117,7 +133,8 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/app.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>

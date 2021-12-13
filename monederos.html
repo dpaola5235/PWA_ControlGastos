@@ -16,9 +16,8 @@
     <div class="collapse" id="navbarToggleExternalContent">
         <div class="p-4" style="background-color: #80cbc4;">
          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="home.html"><i class="fas fa-home"> Inicio</i></a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"> Inicio</i></a></li>
             <li class="nav-item"><a class="nav-link" href="categorias.html"><i class="fas fa-list"> Categorias</i></a></li>
-            <li class="nav-item"><a class="nav-link" href="perfil.html"><i class="far fa-user"> Cuenta</i></a></li>
          </ul>
         </div>
     </div>
@@ -37,22 +36,7 @@
                     <h1>Mis monederos </h1>
                 </div>
                 <div class="col-12" id="monederos">
-                    <ul class="list-group list-group-flush" >
-                        <li class="list-group-item btn-ver">
-                           Monedero1
-                        </li>
-                        <li class="list-group-item btn-ver">
-                            Monedero2
-                        </li>
-                        <li class="list-group-item btn-ver">
-                            Monedero3
-                        </li>
-                        <li class="list-group-item btn-ver">
-                            Monedero4
-                        </li>
-                        <li class="list-group-item btn-ver">
-                            Monedero5
-                        </li>
+                    <ul class="list-group list-group-flush" id="monederos-list">
                     </ul>
                 </div>
             </div>
@@ -66,19 +50,18 @@
                         </div>                        
                     </div>
                     <input type="hidden" id="idMonedero">
-                    <h2 id="nombreMonedero">Monedero1</h2>
-                    <p id="totalMonedero">$1,350</p>
+                    <h2 id="nombreMonedero-monedero"></h2>
+                    <p id="totalMonedero-monedero">$</p>
                 </div>
                 <div class="col-6">
                     <p>Entradas</p>
                     <p>Salidas</p>
                 </div>
                 <div class="col-6" style="text-align: right;">
-                    <p>1350</p>
-                    <p>0</p>
+                    <p id="entradas"></p>
+                    <p id="salidas">0</p>
                     <hr>
-                    <!-- cambiar el id dependiendo del monedero -->
-                    <p id="total">1350</p>
+                    <p id="total-monedero"></p>
                 </div>
             </div>
             <div class="row">
@@ -101,7 +84,7 @@
                     </div>
                     <div class="form-group">
                         <label>Categoria: </label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" aria-label="Default select example" id="categoriaSelect">
                             <option selected>Open this select menu</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -110,15 +93,15 @@
                     </div>
                     <div class="form-group">
                         <label>Monedero: </label>
-                        <input type="text" class="form-control" id="monedero">
+                        <input type="text" class="form-control"  id="monederoInput">
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Agregar Recibo: </label>
-                        <button type="button" id="btnCameraBack" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
-                        <button id="btnTakePhoto" class="btn btn-primary btn-block">Tomar Foto</button> 
-                        <div style="height: 300px;" id="div-player">
-                            <video id="player" class="object-fill" autoplay></video>
+                        <button type="button" id="btnCameraMonederos" class="float-right btn btn-sm btn-outline-primary"><i class="fas fa-camera"></i></button>
+                        <button id="btnTakePhoto" class="btn btn-primary btn-block">Tomar Foto</button>
+                        <div id="div-player" style="height: 300px;">
+                          <video id="player" class="object-fill" autoplay></video>
                         </div>
                         <div id="cardPhoto"></div>
                     </div>
