@@ -3,7 +3,7 @@ class Camera{
         this.videoNode = videoNode;
         this.stream = null;
         this.photo= null;
-        console.log("Creamos new Camera")
+        console.log("Creamos una Nueva Camera")
     }
 
     on(){
@@ -21,7 +21,7 @@ class Camera{
                 this.stream = stream;
                 return true;
             }).catch(error=>{
-                alert("OOps!! ocurrio un error al abrir la camara");
+                alert("OOps!! Ocurrio un error al abrir la camara");
                 console.log(error);
                 return false;
             });
@@ -48,12 +48,12 @@ class Camera{
                 this.stream = stream;
                 return true;
             }).catch(error=>{
-                alert("OOps!! ocurrio un error al abrir la camera");
+                alert("OOps!! Ocurrio un error al abrir la camara");
                 console.log(error);
                 return false;
             });
         }else{
-            alert("no cuentas con dispositivos multimedia");
+            alert("No cuentas con dispositivos multimedia");
             return false;
         }
     }
