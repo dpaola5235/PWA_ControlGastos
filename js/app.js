@@ -9,10 +9,10 @@ if (navigator.serviceWorker) {
 }
 
 // botones
-let principal = $('#principal-monederos');
-let monedero = $('#monedero');
+let principal = $('#principal-mon');
+let monedero = $('#mon');
 let transaccion = $('#transaccion');
-let categorias = $('#categorias');
+let categorias = $('#cat');
 let categoria = $('#categoria');
 let btnGuardar = $('#btnGuardar');
 let btnGuardarIndex = $('#btnGuardar-index')
